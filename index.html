@@ -1822,21 +1822,25 @@
           fullPrompt += `, ${styleText} style`;
         }
         
-        // Build URL parameters
-        let urlParams = `width=${dimensions.width}&height=${dimensions.height}&seed=${currentSeed}&nologo=true`;
+        // Build URL parameters for Pollinations.AI
+        let urlParams = new URLSearchParams();
+        urlParams.set('width', dimensions.width);
+        urlParams.set('height', dimensions.height);
+        urlParams.set('seed', currentSeed);
+        urlParams.set('nologo', 'true');
         
         // Add negative prompt if specified
         if (negativePrompt) {
-          urlParams += `&negative=${encodeURIComponent(negativePrompt)}`;
+          urlParams.set('negative', negativePrompt);
         }
         
         // Add quality parameter if specified
         if (quality && quality !== 'standard') {
-          urlParams += `&quality=${quality}`;
+          urlParams.set('quality', quality);
         }
         
         // Use Pollinations.AI with HTTPS and include all parameters
-        imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?${urlParams}`;
+        imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(fullPrompt)}?${urlParams.toString()}`;
         
         images.push({
           url: imageUrl,
