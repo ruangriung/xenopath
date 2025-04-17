@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RUANG RIUNG AI</title>
+  <title>XENOPATH</title>
   <!-- Google Fonts - Poppins and Luckiest Guy -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
@@ -317,12 +317,116 @@
     
     /* Images gallery - with rounded corners */
     .images-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       margin-top: 15px;
     }
     
+    /* Image History Item styles */
+    .image-history-item {
+      background-color: var(--titanium-color);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+      display: flex;
+    }
+    
+    .image-history-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    }
+    
+    .image-history-preview {
+      flex: 0 0 140px;
+      height: 140px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    
+    .image-history-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-radius: 14px 0 0 14px;
+    }
+    
+    .image-history-preview:hover img {
+      transform: scale(1.05);
+    }
+    
+    .image-history-info {
+      flex: 1;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+    }
+    
+    .image-history-prompt {
+      font-size: 0.85rem;
+      line-height: 1.3;
+      color: white;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .image-history-timestamp {
+      font-size: 0.7rem;
+      color: #ccc;
+      margin-bottom: 8px;
+    }
+    
+    .image-history-model {
+      margin-bottom: 5px;
+    }
+    
+    .image-history-actions {
+      display: flex;
+      gap: 5px;
+      justify-content: flex-end;
+      margin-top: auto;
+    }
+    
+    .history-action-btn {
+      background: var(--titanium-dark);
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .history-action-btn:hover {
+      background: var(--titanium-light);
+      transform: translateY(-1px);
+    }
+    
+    .image-history-empty {
+      color: #999;
+      text-align: center;
+      padding: 30px;
+      font-style: italic;
+      font-size: 0.9rem;
+      background: rgba(20, 20, 20, 0.3);
+      border-radius: 16px;
+      margin-top: 10px;
+    }
+    
+    /* Original image card styles for backwards compatibility */
     .image-card {
       background-color: var(--titanium-color);
       border-radius: 16px;
@@ -459,14 +563,33 @@
         padding: 8px;
       }
       
-      .images-container {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 6px;
+      .image-history-item {
+        flex-direction: column;
       }
       
-      .image-card .actions {
-        opacity: 1;
-        padding: 5px;
+      .image-history-preview {
+        flex: none;
+        width: 100%;
+        height: 180px;
+      }
+      
+      .image-history-preview img {
+        border-radius: 14px 14px 0 0;
+      }
+      
+      .image-history-info {
+        padding: 8px;
+      }
+      
+      .image-history-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .history-action-btn {
+        flex: 1;
+        min-width: 40px;
+        max-width: 60px;
       }
       
       .modal-content {
@@ -522,9 +645,21 @@
         padding: 4px;
       }
       
-      .images-container {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 5px;
+      .image-history-preview {
+        height: 150px;
+      }
+      
+      .image-history-prompt {
+        font-size: 0.75rem;
+      }
+      
+      .image-history-actions {
+        gap: 4px;
+      }
+      
+      .history-action-btn {
+        padding: 4px 6px;
+        font-size: 0.65rem;
       }
       
       .range-value {
@@ -1119,13 +1254,36 @@
     .model-specific-params.active {
       display: block;
     }
+
+    /* Image History Header */
+    .image-history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      background-color: var(--titanium-color);
+      border-radius: 12px;
+      padding: 8px 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .image-history-header h3 {
+      font-size: 0.9rem;
+      color: white;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <!-- Header -->
     <header class="header">
-      <h1 class="title">RUANG RIUNG AI</h1>
+      <h1 class="title">XENOPATH</h1>
       <p class="subtitle">AI Image Generation Studio</p>
     </header>
     
@@ -1195,6 +1353,14 @@
     <!-- Error message -->
     <div id="errorMessage" class="error-message">
       <i class="fas fa-exclamation-circle"></i> <span id="errorText"></span>
+    </div>
+    
+    <!-- Image History Header -->
+    <div class="image-history-header">
+      <h3><i class="fas fa-images"></i> Image History</h3>
+      <button id="clearImageHistoryBtn" class="history-btn">
+        <i class="fas fa-trash"></i> Clear Images
+      </button>
     </div>
     
     <!-- Image gallery -->
@@ -1666,6 +1832,7 @@
     const clearHistoryBtn = document.getElementById('clearHistoryBtn');
     const recallLastPromptBtn = document.getElementById('recallLastPromptBtn');
     const downloadOverlay = document.getElementById('downloadOverlay');
+    const clearImageHistoryBtn = document.getElementById('clearImageHistoryBtn');
     
     // Settings Buttons
     const negativePromptBtn = document.getElementById('negativePromptBtn');
@@ -1750,8 +1917,8 @@
     // Prompt History Array
     let promptHistory = [];
     
-    // Saved Images Array
-    let savedImages = [];
+    // Image History Array
+    let imageHistory = [];
     
     // pollinationsAIImageGen
     let styles = [
@@ -1941,7 +2108,6 @@
       
       // Show loading indicator
       loadingIndicator.style.display = 'block';
-      imagesContainer.innerHTML = '';
       errorMessage.style.display = 'none';
       generateBtn.disabled = true;
       
@@ -2143,11 +2309,10 @@
         images.push({
           url: imageUrl,
           prompt: fullPrompt,
-          negativePrompt: negativePrompt,
           seed: currentSeed,
           dimensions,
           model,
-          timestamp: new Date().toISOString()
+          negativePrompt
         });
       }
       
@@ -2156,143 +2321,199 @@
     
     // Display generated images
     function displayImages(images, prompt, scale, model) {
-      // Save images to localStorage first
-      saveImagesToLocalStorage(images);
+      // Add images to history with current timestamp
+      const timestamp = new Date();
       
-      // Clear existing content
-      imagesContainer.innerHTML = '';
+      images.forEach(image => {
+        imageHistory.unshift({
+          url: image.url,
+          prompt: image.prompt,
+          seed: image.seed,
+          dimensions: image.dimensions,
+          model: image.model,
+          negativePrompt: image.negativePrompt,
+          timestamp: timestamp
+        });
+      });
       
-      // Display all images (new and saved)
-      renderAllImages();
+      // Save history to localStorage
+      saveImageHistory();
       
-      // Scroll to images
+      // Display image history
+      displayImageHistory();
+      
+      // Scroll to images section
       imagesContainer.scrollIntoView({ behavior: 'smooth' });
     }
     
-    // Save images to localStorage
-    function saveImagesToLocalStorage(newImages) {
-      try {
-        // Add new images to the beginning of the saved images array
-        savedImages = [...newImages, ...savedImages];
-        
-        // Keep only the most recent 50 images to avoid local storage limits
-        if (savedImages.length > 50) {
-          savedImages = savedImages.slice(0, 50);
-        }
-        
-        // Convert image data to JSON string and store in localStorage
-        localStorage.setItem('ruang_riung_ai_saved_images', JSON.stringify(savedImages));
-      } catch (error) {
-        console.error('Error saving images to localStorage:', error);
-        showError('Could not save images to localStorage. Storage might be full.');
-      }
-    }
-    
-    // Load saved images from localStorage
-    function loadImagesFromLocalStorage() {
-      try {
-        const savedImagesJson = localStorage.getItem('ruang_riung_ai_saved_images');
-        if (savedImagesJson) {
-          savedImages = JSON.parse(savedImagesJson);
-        }
-      } catch (error) {
-        console.error('Error loading images from localStorage:', error);
-        savedImages = [];
-      }
-    }
-    
-    // Render all images in the images container
-    function renderAllImages() {
-      if (savedImages.length === 0) {
-        imagesContainer.innerHTML = '<p style="color:#999;width:100%;text-align:center;padding:20px;">No images yet. Generate some images!</p>';
+    // Display image history
+    function displayImageHistory() {
+      imagesContainer.innerHTML = '';
+      
+      if (imageHistory.length === 0) {
+        imagesContainer.innerHTML = '<div class="image-history-empty">No images generated yet. Create some images!</div>';
         return;
       }
       
-      imagesContainer.innerHTML = '';
-      
-      savedImages.forEach((image, index) => {
-        const imageCard = document.createElement('div');
-        imageCard.className = 'image-card';
+      imageHistory.forEach((item, index) => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'image-history-item';
         
-        const img = document.createElement('img');
-        img.src = image.url;
-        img.alt = `Generated image ${index + 1}: ${image.prompt}`;
-        img.loading = 'lazy';
+        const formattedDate = formatTimestamp(item.timestamp);
         
-        // Add click event to open fullscreen view
-        img.addEventListener('click', function() {
-          openFullscreen(this.src);
-        });
+        historyItem.innerHTML = `
+          <div class="image-history-preview">
+            <img src="${item.url}" alt="Generated image" loading="lazy">
+          </div>
+          <div class="image-history-info">
+            <div class="image-history-prompt">${item.prompt}</div>
+            <div class="image-history-timestamp">${formattedDate}</div>
+            <div class="image-history-model">
+              <span class="model-badge ${item.model}">${getModelDisplayName(item.model)}</span>
+            </div>
+            <div class="image-history-actions">
+              <button class="history-action-btn view-btn" title="View Full Size">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="history-action-btn restore-btn" title="Restore to Canvas">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="history-action-btn download-btn" title="Download Image">
+                <i class="fas fa-download"></i>
+              </button>
+              <button class="history-action-btn upscale-btn" title="Upscale with Topaz">
+                <i class="fas fa-expand"></i>
+              </button>
+              <button class="history-action-btn delete-btn" title="Delete from History">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+        `;
         
-        const actions = document.createElement('div');
-        actions.className = 'actions';
+        // Add event listeners for buttons
+        const viewBtn = historyItem.querySelector('.view-btn');
+        const restoreBtn = historyItem.querySelector('.restore-btn');
+        const downloadBtn = historyItem.querySelector('.download-btn');
+        const upscaleBtn = historyItem.querySelector('.upscale-btn');
+        const deleteBtn = historyItem.querySelector('.delete-btn');
+        const imagePreview = historyItem.querySelector('.image-history-preview img');
         
-        // Model badge
-        const modelBadge = document.createElement('span');
-        modelBadge.className = `model-badge ${image.model}`;
-        modelBadge.textContent = getModelDisplayName(image.model);
+        viewBtn.addEventListener('click', () => openFullscreen(item.url));
+        restoreBtn.addEventListener('click', () => restoreImageToCanvas(item));
+        downloadBtn.addEventListener('click', () => downloadImage(item.url, `xenopath-${item.model}-${item.seed}.jpg`));
+        upscaleBtn.addEventListener('click', () => openUpscaleModal(item, 3.0));
+        deleteBtn.addEventListener('click', () => deleteImageFromHistory(index));
+        imagePreview.addEventListener('click', () => openFullscreen(item.url));
         
-        // Download button
-        const downloadBtn = document.createElement('button');
-        downloadBtn.className = 'image-action';
-        downloadBtn.innerHTML = '<i class="fas fa-download"></i>';
-        downloadBtn.title = 'Download image';
-        downloadBtn.onclick = (e) => {
-          e.stopPropagation(); // Prevent triggering the parent's click event
-          downloadImage(image.url, `ruang-riung-ai-${image.model}-${image.seed}.jpg`);
-        };
-        
-        // Upscale button
-        const upscaleBtn = document.createElement('button');
-        upscaleBtn.className = 'image-action';
-        upscaleBtn.innerHTML = '<i class="fas fa-expand"></i>';
-        upscaleBtn.title = 'Upscale with Topaz Gigapixel AI';
-        upscaleBtn.onclick = (e) => {
-          e.stopPropagation(); // Prevent triggering the parent's click event
-          openUpscaleModal(image, parseFloat(scaleInput.value));
-        };
-        
-        // Delete button
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'image-action';
-        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-        deleteBtn.title = 'Delete this image';
-        deleteBtn.onclick = (e) => {
-          e.stopPropagation(); // Prevent triggering the parent's click event
-          deleteImageFromStorage(index);
-        };
-        
-        // Add buttons to actions
-        actions.appendChild(modelBadge);
-        const actionButtons = document.createElement('div');
-        actionButtons.style.display = 'flex';
-        actionButtons.appendChild(downloadBtn);
-        actionButtons.appendChild(upscaleBtn);
-        actionButtons.appendChild(deleteBtn);
-        actions.appendChild(actionButtons);
-        
-        // Add everything to the card
-        imageCard.appendChild(img);
-        imageCard.appendChild(actions);
-        
-        // Add card to container
-        imagesContainer.appendChild(imageCard);
+        imagesContainer.appendChild(historyItem);
       });
     }
     
-    // Delete an image from storage
-    function deleteImageFromStorage(index) {
-      if (confirm('Are you sure you want to delete this image?')) {
-        // Remove the image from the array
-        savedImages.splice(index, 1);
-        
-        // Update localStorage
-        localStorage.setItem('ruang_riung_ai_saved_images', JSON.stringify(savedImages));
-        
-        // Re-render the images
-        renderAllImages();
+    // Format timestamp to readable date/time
+    function formatTimestamp(timestamp) {
+      const date = new Date(timestamp);
+      return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
+    }
+    
+    // Restore image to canvas for editing
+    function restoreImageToCanvas(image) {
+      // Set the prompt text to the image's prompt
+      promptInput.value = image.prompt;
+      
+      // Set the negative prompt if available
+      if (image.negativePrompt) {
+        negativePromptInput.value = image.negativePrompt;
+      }
+      
+      // Try to extract style from prompt
+      const styleRegex = /, (.*) style$/;
+      const styleMatch = image.prompt.match(styleRegex);
+      if (styleMatch && styleMatch[1]) {
+        const styleText = styleMatch[1].trim();
+        // Convert text to dash-case for the select option
+        const dashStyle = styleText.replace(/ /g, '-');
+        // Check if this style exists in our options
+        const styleOption = Array.from(styleSelect.options).find(opt => opt.value === dashStyle);
+        if (styleOption) {
+          styleSelect.value = dashStyle;
+        }
+      }
+      
+      // Set the model
+      modelSelect.value = image.model;
+      updateModelSpecificParams();
+      
+      // Auto-resize the prompt input
+      autoResizeTextarea(promptInput);
+      
+      // Scroll to the prompt input
+      promptInput.scrollIntoView({ behavior: 'smooth' });
+      
+      // Focus on the prompt input
+      promptInput.focus();
+    }
+    
+    // Delete image from history
+    function deleteImageFromHistory(index) {
+      if (confirm('Are you sure you want to delete this image from history?')) {
+        imageHistory.splice(index, 1);
+        saveImageHistory();
+        displayImageHistory();
       }
     }
+    
+    // Save image history to localStorage
+    function saveImageHistory() {
+      try {
+        localStorage.setItem('xenopath_image_history', JSON.stringify(imageHistory));
+      } catch (error) {
+        console.error('Error saving image history:', error);
+        // If the data is too large for localStorage, keep only the latest 50 items
+        if (imageHistory.length > 50) {
+          imageHistory = imageHistory.slice(0, 50);
+          try {
+            localStorage.setItem('xenopath_image_history', JSON.stringify(imageHistory));
+          } catch (e) {
+            console.error('Still failed to save image history after truncating:', e);
+          }
+        }
+      }
+    }
+    
+    // Load image history from localStorage
+    function loadImageHistory() {
+      const savedHistory = localStorage.getItem('xenopath_image_history');
+      if (savedHistory) {
+        try {
+          imageHistory = JSON.parse(savedHistory);
+          
+          // Convert string timestamps back to Date objects
+          imageHistory.forEach(item => {
+            if (typeof item.timestamp === 'string') {
+              item.timestamp = new Date(item.timestamp);
+            }
+          });
+          
+          // Sort by timestamp (newest first)
+          imageHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+          
+          displayImageHistory();
+        } catch (error) {
+          console.error('Error loading image history:', error);
+          imageHistory = [];
+        }
+      }
+    }
+    
+    // Clear image history
+    clearImageHistoryBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to clear all image history?')) {
+        imageHistory = [];
+        saveImageHistory();
+        displayImageHistory();
+      }
+    });
     
     // Open fullscreen image view
     function openFullscreen(imageSrc) {
@@ -2498,7 +2719,7 @@
     
     // Load prompt history from localStorage
     function loadPromptHistory() {
-      const savedHistory = localStorage.getItem('ruang_riung_ai_prompt_history');
+      const savedHistory = localStorage.getItem('xenopath_prompt_history');
       if (savedHistory) {
         try {
           promptHistory = JSON.parse(savedHistory);
@@ -2513,7 +2734,7 @@
     // Save prompt history to localStorage
     function savePromptHistory() {
       try {
-        localStorage.setItem('ruang_riung_ai_prompt_history', JSON.stringify(promptHistory));
+        localStorage.setItem('xenopath_prompt_history', JSON.stringify(promptHistory));
       } catch (error) {
         console.error('Error saving prompt history:', error);
         showError('Failed to save prompt history. Local storage might be full.');
@@ -2547,7 +2768,7 @@
       renderPromptHistory();
       
       // Save last prompt to localStorage for quick recall
-      localStorage.setItem('ruang_riung_ai_last_prompt', JSON.stringify(historyItem));
+      localStorage.setItem('xenopath_last_prompt', JSON.stringify(historyItem));
     }
     
     // Render prompt history in the UI
@@ -2704,9 +2925,9 @@
             renderPromptHistory();
             
             // If this was the last used prompt, update that in localStorage too
-            const lastPrompt = JSON.parse(localStorage.getItem('ruang_riung_ai_last_prompt') || '{}');
+            const lastPrompt = JSON.parse(localStorage.getItem('xenopath_last_prompt') || '{}');
             if (lastPrompt.id === item.id) {
-              localStorage.setItem('ruang_riung_ai_last_prompt', JSON.stringify(promptHistory[index]));
+              localStorage.setItem('xenopath_last_prompt', JSON.stringify(promptHistory[index]));
             }
           }
         }
@@ -2784,9 +3005,9 @@
     // Delete a prompt from history
     function deletePromptFromHistory(id) {
       // If this is the last prompt, remove it from localStorage
-      const lastPrompt = JSON.parse(localStorage.getItem('ruang_riung_ai_last_prompt') || '{}');
+      const lastPrompt = JSON.parse(localStorage.getItem('xenopath_last_prompt') || '{}');
       if (lastPrompt.id === id) {
-        localStorage.removeItem('ruang_riung_ai_last_prompt');
+        localStorage.removeItem('xenopath_last_prompt');
       }
       
       promptHistory = promptHistory.filter(item => item.id !== id);
@@ -2798,7 +3019,7 @@
     function clearPromptHistory() {
       if (confirm('Are you sure you want to clear all prompt history?')) {
         promptHistory = [];
-        localStorage.removeItem('ruang_riung_ai_last_prompt');
+        localStorage.removeItem('xenopath_last_prompt');
         savePromptHistory();
         renderPromptHistory();
       }
@@ -2809,7 +3030,7 @@
     
     // Event listener for recalling last prompt
     recallLastPromptBtn.addEventListener('click', () => {
-      const lastPrompt = localStorage.getItem('ruang_riung_ai_last_prompt');
+      const lastPrompt = localStorage.getItem('xenopath_last_prompt');
       if (lastPrompt) {
         try {
           const lastPromptObj = JSON.parse(lastPrompt);
@@ -2849,14 +3070,11 @@
       // Load prompt history
       loadPromptHistory();
       
-      // Load saved images
-      loadImagesFromLocalStorage();
-      
-      // Display saved images
-      renderAllImages();
+      // Load image history
+      loadImageHistory();
       
       // Try to load last prompt from localStorage
-      const lastPrompt = localStorage.getItem('ruang_riung_ai_last_prompt');
+      const lastPrompt = localStorage.getItem('xenopath_last_prompt');
       if (lastPrompt) {
         try {
           const lastPromptObj = JSON.parse(lastPrompt);
